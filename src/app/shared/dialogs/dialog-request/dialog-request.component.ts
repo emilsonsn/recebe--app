@@ -8,7 +8,6 @@ import { RequestOrder, RequestOrderStatus } from '@models/requestOrder';
 import { Supplier } from '@models/supplier';
 import { User } from '@models/user';
 import { ConstructionService } from '@services/construction.service';
-import { OrderService } from '@services/order.service';
 import { RequestService } from '@services/request.service';
 import { SupplierService } from '@services/supplier.service';
 import { UserService } from '@services/user.service';
@@ -45,7 +44,6 @@ export class DialogRequestComponent {
     private readonly _fb : FormBuilder,
     private readonly _toastr : ToastrService,
     private readonly _requestService : RequestService,
-    private readonly _orderService : OrderService,
     private readonly _constructionService : ConstructionService,
     private readonly _userService : UserService,
     private readonly _supplierService : SupplierService,
@@ -192,10 +190,7 @@ export class DialogRequestComponent {
   }
 
   public getOrders() {
-    this._orderService.getOrders()
-      .subscribe(res => {
-        this.orders = res.data;
-      })
+
   }
 
 }

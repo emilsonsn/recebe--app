@@ -1,0 +1,10 @@
+@import "_variables";
+
+#buttons {
+  display: flex;
+  gap: 0.3rem;
+
+  button {
+    width: 7rem;
+  }
+}

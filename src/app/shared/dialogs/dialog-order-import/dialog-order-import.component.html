@@ -1,0 +1,66 @@
+<mat-dialog-content>
+
+  @if(loading) {
+  <div matRipple class="me-auto me-sm-0 mb-sm-0 mb-2 loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  }
+
+  <div class="d-flex align-items-center justify-content-between">
+    <span class="fw-bold fs-5">{{ title }}</span>
+    <div matRipple class="close" (click)="onCancel()">
+      <i class="fa-solid fa-close"></i>
+    </div>
+  </div>
+
+  <mat-divider class="my-3"></mat-divider>
+
+  <form class="row">
+
+    <div class="col-12 mb-3">
+      <div class="profile-upload">
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx, .xls, .ods, image/*" hidden>
+        <div class="upload-container" (click)="triggerFileInput()" [ngClass]="{'drag-over': isDragOver}"
+          (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <div class="upload-placeholder" *ngIf="!profileImage">
+            <i class="fa-solid fa-upload"></i>
+            <p>Arraste a imagem aqui ou clique para fazer upload</p>
+          </div>
+          @if(profileImage) {
+            <div alt="Arquivo" class="uploaded-image">
+              <div class="template">
+                <i class="fa-solid fa-file"></i>
+              </div>
+            </div>
+            <div matRipple class="remove-image" (click)="removeImage($event)">
+              <i class="fa-solid fa-trash"></i>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <small class="text-muted">{{ getFileName() }}</small>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <span>Arquivos Permitidos: ['xlsx', 'xls', 'ods']</span>
+    </div>
+
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="w-100 me-2">
+    <div id="actionsDialog" class="flex-sm-row flex-column">
+      <div id="buttonsDialog" class="flex-sm-row flex-column">
+        <div class="col-auto">
+          <button matRipple id="cancel" class="button cancel" (click)="onCancel()">Cancelar</button>
+        </div>
+        <div class="col-auto">
+          <button matRipple id="submit" class="button yellow" (click)="onConfirm()">Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-actions>

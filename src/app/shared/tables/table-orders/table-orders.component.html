@@ -3,120 +3,291 @@
     <table class="table table-responsive">
       <thead>
         @for (col of columns; track col) {
-          <th [class.hasorder]="col.order"
-              [class.active-order]="pageControl.orderField === col.slug"
-              (click)="onClickOrderBy(col.slug, col.order)">
-            <div class="d-flex {{col.classes}}">
-              {{ col.title }}
-              <i class="material-icons" *ngIf="pageControl.orderField === col.slug">
-                {{ pageControl.order === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}
-              </i>
-            </div>
-          </th>
+        <th [class.hasorder]="col.order" [class.active-order]="pageControl.orderField === col.slug"
+          (click)="onClickOrderBy(col.slug, col.order)">
+          <div class="d-flex {{col.classes}}">
+            {{ col.title }}
+            <i class="material-icons" *ngIf="pageControl.orderField === col.slug">
+              {{ pageControl.order === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}
+            </i>
+          </div>
+        </th>
         }
       </thead>
       <tbody>
         @if (loading) {
-          <tr>
-            <td [attr.colspan]="columns.length + 1">
-              <div id="mat-loading">
-                <mat-spinner></mat-spinner>
-              </div>
-            </td>
-          </tr>
+        <tr>
+          <td [attr.colspan]="columns.length + 1">
+            <div id="mat-loading">
+              <mat-spinner></mat-spinner>
+            </div>
+          </td>
+        </tr>
         } @else {
-          @if (!orders?.length) {
-            <tr>
-              <td [attr.colspan]="columns.length + 1" class="text-center">
-                <div>Nenhum resultado encontrado</div>
-              </td>
-            </tr>
-          } @else {
-            @for (order of orders; track order) {
-              <tr class="table-line-hover" style="outline: none;">
-                <td>
-                  <div>
-                    {{ order.order_type | requestOrderType }}
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    {{ order?.supplier?.fantasy_name }}
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex align-items-center" style="gap: 1rem;">
-                    <app-avatar
-                      [imageUrl]="order?.user?.photo"
-                      [altText]="order?.user?.name"
-                      [color]="'#e7b403'"
-                      [onCircle]="true"
-                    ></app-avatar>
-                    {{ order?.user?.name }}
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    {{ order.total_value | currency }}
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    {{ order.construction?.name }}
-                  </div>
-                </td>
-                <td>
-                  <div [ngClass]="'status ' + order?.purchase_status?.toLowerCase()">
-                    {{ order.purchase_status | status }}
-                  </div>
-                </td>
-                @if (!home) {
-                  <td>
-                    <div id="buttons" class="d-flex justify-content-end">
-                      <div matRipple class="buttonTemplate" (click)="onViewOrder.emit(
+        @if (!orders?.length) {
+        <tr>
+          <td [attr.colspan]="columns.length + 1" class="text-center">
+            <div>Nenhum resultado encontrado</div>
+          </td>
+        </tr>
+        } @else {
+        @for (order of orders; track order) {
+        <tr class="table-line-hover" [ngStyle]="{ 'background-color': order == expanded ? '#efefef' : 'transparent' }"
+          (click)="toggleExpanded(order)">
+          <td>
+            <div>
+              {{ order?.type ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ order?.order_id ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ order?.marketplace ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ order?.account ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ (order?.order_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ (order?.release_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ (order?.sale_value | currency) ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ (order?.refund_sale | currency) ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ (order?.net_result | currency) ?? '-' }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ "CORREÇÃO MANUAL" }}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{ order?.status ?? '-'}}
+            </div>
+          </td>
+          @if (!home) {
+          <td>
+            <div id="buttons" class="d-flex justify-content-end">
+              <div matRipple class="buttonTemplate" (click)="onViewOrder.emit(
                       {
                         edit: false,
                         order : order
                       }
                     )">
-                        <i class="fa-solid fa-eye"></i>
-                      </div>
+                <i class="fa-solid fa-eye"></i>
+              </div>
 
-                      <div matRipple class="buttonTemplate" (click)="onEditOrder.emit(
+              <div matRipple class="buttonTemplate" (click)="onEditOrder.emit(
                       {
                         edit: true,
                         order : order
                       }
                     )">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </div>
+                <i class="fa-solid fa-pen-to-square"></i>
+              </div>
 
-                      @if (order.purchase_status == orderStatus.Pending) {
-                        <div matRipple class="buttonTemplate" (click)="onDeleteOrder.emit(order)">
-                          <i class="fa-solid fa-trash"></i>
-                        </div>
-                      }
-                    </div>
-                  </td>
-                }
-              </tr>
-            }
+              <div matRipple class="buttonTemplate" (click)="onDeleteOrder.emit(order)">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+
+            </div>
+          </td>
           }
+        </tr>
+        <tr>
+          <td colspan="14" class="p-0">
+            <div [@detailExpand]="order == expanded ? 'expanded' : 'collapsed'" style="overflow: hidden;">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Referência</span>
+                    <div>
+                      {{ order?.reference_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Comissão</span>
+                    <div>
+                      {{ (order?.commission | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Comissão</span>
+                    <div>
+                      {{ (order?.refund_commission | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Taxa de Envio</span>
+                    <div>
+                      {{ (order?.shipping_fee | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Taxa de Envio</span>
+                    <div>
+                      {{ (order?.refund_shipping_fee | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Campanhas</span>
+                    <div>
+                      {{ (order?.campaigns | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Campanhas</span>
+                    <div>
+                      {{ (order?.refund_campaigns | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Taxas</span>
+                    <div>
+                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Taxas</span>
+                    <div>
+                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Outros Créditos</span>
+                    <div>
+                      {{ (order?.other_credits | currency) ?? 'R$ 0,00'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Outros Débitos</span>
+                    <div>
+                      {{ (order?.other_debits | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Sequência</span>
+                    <div>
+                      {{ order?.sequence_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Integrador</span>
+                    <div>
+                      {{ order?.integrator_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Envio</span>
+                    <div>
+                      {{ order?.shipping_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Conta</span>
+                    <div>
+                      {{ order?.account ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Número Nota Fiscal</span>
+                    <div>
+                      {{ order?.invoice_number ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Série Nota Fiscal</span>
+                    <div>
+                      {{ order?.invoice_series ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Data Sincronização</span>
+                    <div>
+                      {{ (order?.sync_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Usuário</span>
+                    <div>
+                      {{ order?.user_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        }
+        }
         }
 
       </tbody>
     </table>
   </div>
 
-  <mat-paginator
-    [length]="pageControl.itemCount"
-    [pageSize]="pageControl.take"
-    [showFirstLastButtons]="true"
-    [pageSizeOptions]="[10, 25, 50, 100]"
-    [hidePageSize]="false"
-    [pageIndex]="pageControl.page"
-    aria-label="Select page"
-    (page)="pageEvent($event)"
-  >
+  <mat-paginator [length]="pageControl.itemCount" [pageSize]="pageControl.take" [showFirstLastButtons]="true"
+    [pageSizeOptions]="[10, 25, 50, 100]" [hidePageSize]="false" [pageIndex]="pageControl.page" aria-label="Select page"
+    (page)="pageEvent($event)">
   </mat-paginator>
 </div>

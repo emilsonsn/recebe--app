@@ -15,7 +15,7 @@ import {Utils} from '@shared/utils';
 export class DialogCollaboratorComponent {
 
   public isNewCollaborator: boolean = true;
-  public title: string = 'Novo colaborador';
+  public title: string = 'Novo Usuário';
   public form: FormGroup;
   public loading: boolean = false;
   public profileImageFile: File | null = null;
@@ -43,8 +43,6 @@ export class DialogCollaboratorComponent {
       name: [null, [Validators.required]],
       cpf_cnpj: [null, [Validators.required]],
       birth_date: [null, [Validators.required]],
-      company_position_id: [null, [Validators.required]],
-      sector_id: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       whatsapp: [null, [Validators.required]],
       email: [null, [Validators.required]],
@@ -52,7 +50,7 @@ export class DialogCollaboratorComponent {
 
     if (this._data?.user) {
       this.isNewCollaborator = false;
-      this.title = 'Editar colaborador';
+      this.title = 'Editar Usuário';
       this._fillForm(this._data.user);
       if (this._data.user.photo) {
         this.profileImage = this._data.user.photo

@@ -18,7 +18,6 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {DialogConfirmComponent} from './dialog-confirm/dialog-confirm.component';
 import {FiltersModule} from './filters/filters.module';
-import {DialogOrderComponent} from './dialog-order/dialog-order.component';
 import {DialogCollaboratorComponent} from './dialog-collaborator/dialog-collaborator.component';
 import {CdkTextareaAutosize, TextFieldModule} from '@angular/cdk/text-field';
 import {MatRippleModule} from '@angular/material/core';
@@ -37,12 +36,13 @@ import {DialogTaskComponent} from './dialog-task/dialog-task.component';
 import {MatIcon} from "@angular/material/icon";
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import {DialogOrderSolicitationComponent} from './dialog-order-solicitation/dialog-order-solicitation.component';
+import { DialogOrderComponent } from './dialog-order/dialog-order.component';
+import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-import.component';
 
 
 @NgModule({
   declarations: [
     DialogConfirmComponent,
-    DialogOrderComponent,
     DialogCollaboratorComponent,
     DialogProviderComponent,
     DialogServiceComponent,
@@ -53,7 +53,9 @@ import {DialogOrderSolicitationComponent} from './dialog-order-solicitation/dial
     DialogTypeServiceComponent,
     DialogTypeUserSectorComponent,
     DialogTaskComponent,
-    DialogOrderSolicitationComponent
+    DialogOrderSolicitationComponent,
+    DialogOrderComponent,
+    DialogOrderImportComponent
   ],
   imports: [
     CommonModule,

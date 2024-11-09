@@ -48,18 +48,6 @@ export class TableUserComponent {
       align: "justify-content-center",
     },
     {
-      slug: "position",
-      order: true,
-      title: "Cargo",
-      align: "justify-content-center",
-    },
-    {
-      slug: "sector",
-      order: true,
-      title: "Setor",
-      align: "justify-content-center",
-    },
-    {
       slug: "cellphone",
       order: true,
       title: "Whatsapp",
@@ -75,7 +63,7 @@ export class TableUserComponent {
       slug: "",
       order: true,
       title: "Ações",
-      align: "justify-content-center",
+      align: "justify-content-end me-4",
     },
   ];
 

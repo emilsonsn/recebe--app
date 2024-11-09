@@ -38,7 +38,7 @@
               <div>Nenhum resultado encontrado</div>
             </td>
           </tr>
-          @for (collaborator of users; track collaborator) {
+          @for (user of users; track user) {
             <tr
               class="table-line-hover"
               style="outline: none; cursor: pointer"
@@ -49,55 +49,41 @@
                   style="white-space: nowrap"
                 >
                   <app-avatar
-                    [imageUrl]="collaborator?.photo"
-                    [altText]="collaborator?.name"
+                    [imageUrl]="user?.photo"
+                    [altText]="user?.name"
                     [color]="'#e7b403'"
                     [onCircle]="true"
                   ></app-avatar>
-                  {{ collaborator?.name }}
+                  {{ user?.name }}
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  {{ collaborator?.cpf_cnpj | cpfCnpjMask }}
+                  {{ user?.cpf_cnpj | cpfCnpjMask }}
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  {{ collaborator?.birth_date | date: "dd/MM/YYYY" }}
+                  {{ user?.birth_date | date: "dd/MM/YYYY" }}
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  {{ collaborator?.company_position?.position }}
+                  {{ user?.whatsapp | phoneMask }}
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  {{ collaborator?.sector?.sector }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ collaborator?.whatsapp | phoneMask }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ collaborator?.email }}
+                  {{ user?.email }}
                 </div>
               </td>
               <td>
                 <div class="d-flex justify-content-end">
-                  <div matRipple class="buttonTemplate" (click)="onUserClick.emit(collaborator)">
-                    <i class="fa-solid fa-eye"></i>
-                  </div>
-
-                  <div matRipple class="buttonTemplate" (click)="onUserClick.emit(collaborator)">
+                  <div matRipple class="buttonTemplate" (click)="onUserClick.emit(user)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </div>
 
-                  <div matRipple class="buttonTemplate" (click)="onDeleteUserClick.emit(collaborator?.id)">
+                  <div matRipple class="buttonTemplate" (click)="onDeleteUserClick.emit(user?.id)">
                     <i class="fa-solid fa-trash"></i>
                   </div>
                 </div>
@@ -115,7 +101,7 @@
     [pageSizeOptions]="[10, 25, 50, 100]"
     [hidePageSize]="false"
     [pageIndex]="pageControl.page - 1"
-    aria-label="Select page"
+    (page)="pageEvent($event)"
   >
   </mat-paginator>
 

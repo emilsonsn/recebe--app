@@ -15,7 +15,9 @@
     @for (item of menuItem; track item) {
       <li routerLinkActive="active" [routerLink]="item.route">
         <a [routerLink]="item.route">
-          <i [class]="item.icon"></i>
+          <span class="d-flex justify-content-center" style="width: 2.4rem;">
+            <i [class]="item.icon"></i>
+          </span>
           <span>{{ item.label }}</span>
         </a>
       </li>

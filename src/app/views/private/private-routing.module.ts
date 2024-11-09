@@ -11,22 +11,6 @@ const routes: Routes = [
     component: LayoutPrivateComponent,
     children: [
       {
-        path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'home'
-        }
-      },
-      {
-        path: 'requests',
-        loadChildren: () => import('./requests/requests.module').then(m => m.RequestsModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'requests'
-        }
-      },
-      {
         path: 'orders',
         loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule),
         canActivate: [permissionGuard],
@@ -43,48 +27,8 @@ const routes: Routes = [
         }
       },
       {
-        path: 'construction',
-        loadChildren: () => import('./construction/construction.module').then(m => m.ConstructionModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'construction'
-        }
-      },
-      {
-        path: 'provider',
-        loadChildren: () => import('./provider/provider.module').then(m => m.ProviderModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'provider'
-        }
-      },
-      {
-        path: 'services',
-        loadChildren: () => import('./services/services.module').then(m => m.ServicesModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'services'
-        }
-      },
-      {
-        path: 'tasks',
-        loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'tasks'
-        }
-      },
-      {
-        path: 'client',
-        loadChildren: () => import('./client/client.module').then(m => m.ClientModule),
-        canActivate: [permissionGuard],
-        data: {
-          page: 'client'
-        }
-      },
-      {
         path: '**',
-        redirectTo: 'home',
+        redirectTo: 'orders',
         canMatch: []
       }
     ]

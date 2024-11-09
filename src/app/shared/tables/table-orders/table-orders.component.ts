@@ -1,17 +1,41 @@
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import {Order, PageControl} from '@models/application';
-import {RequestOrder, RequestOrderStatus} from '@models/requestOrder';
-import {OrderService} from '@services/order.service';
-import {ToastrService} from 'ngx-toastr';
-import {finalize, Subscription} from 'rxjs';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { Order, PageControl } from '@models/application';
+import { OrderResponse } from '@models/order';
+import { RequestOrderStatus } from '@models/requestOrder';
+import { OrderService } from '@services/order.service';
+import { ToastrService } from 'ngx-toastr';
+import { finalize, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-table-orders',
   templateUrl: './table-orders.component.html',
-  styleUrl: './table-orders.component.scss'
+  styleUrl: './table-orders.component.scss',
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class TableOrdersComponent {
-
+  protected expanded: any;
   private subscription: Subscription;
   protected orderStatus = RequestOrderStatus;
 
@@ -31,62 +55,142 @@ export class TableOrdersComponent {
   public onEditOrder = new EventEmitter<any>();
 
   @Output()
-  public onDeleteOrder = new EventEmitter<RequestOrder>();
-
+  public onDeleteOrder = new EventEmitter<OrderResponse>();
 
   public columns = [
     {
-      slug: "order_type",
+      slug: 'type',
       order: false,
-      title: "Tipo de Solicitação",
-      classes: "",
+      title: 'Tipo',
+      classes: '',
     },
     {
-      slug: "supplier_id",
+      slug: 'order_id',
       order: false,
-      title: "Fornecedor",
-      classes: "",
+      title: 'ID Pedido',
+      classes: '',
     },
     {
-      slug: "user_id",
+      slug: 'marketplace',
       order: false,
-      title: "Solicitante",
-      classes: "",
+      title: 'Marketplace',
+      classes: '',
     },
     {
-      slug: "total_value",
+      slug: 'account',
       order: false,
-      title: "Valor",
-      classes: "",
+      title: 'Conta',
+      classes: '',
     },
     {
-      slug: "construction_id",
+      slug: 'order_date',
       order: false,
-      title: "Obra",
-      classes: "",
+      title: 'Data Pedido',
+      classes: '',
     },
     {
-      slug: "purchase_status",
+      slug: 'release_date',
       order: false,
-      title: "Status",
-      classes: "",
+      title: 'Data Repasse',
+      classes: '',
     },
     {
-      slug: "actions",
+      slug: 'sale_value',
       order: false,
-      title: "Ações",
-      classes: "justify-content-end me-5",
+      title: 'Venda',
+      classes: '',
+    },
+    {
+      slug: 'refund_sale',
+      order: false,
+      title: 'Estorno',
+      classes: '',
+    },
+    {
+      slug: 'net_result',
+      order: false,
+      title: 'Resultado Líquido',
+      classes: '',
+    },
+    {
+      slug: 'no-idea',
+      order: false,
+      title: 'Correção Manual',
+      classes: '',
+    },
+    {
+      slug: 'status',
+      order: false,
+      title: 'Status',
+      classes: '',
+    },
+    {
+      slug: 'actions',
+      order: false,
+      title: 'Ações',
+      classes: 'justify-content-end me-5',
     },
   ];
 
-  public orders: RequestOrder[] = [];
+  public orders: OrderResponse[] = [
+    {
+      type: 'TESTE',
+      order_id: '333',
+      reference_id: '333',
+      order_date: new Date(),
+      sale_value: 10,
+      refund_sale: 20,
+      commission: 30,
+      refund_commission: 40,
+      shipping_fee: 50,
+      refund_shipping_fee: 60,
+      campaigns: 70,
+      refund_campaigns: 80,
+      taxes: 90,
+      refund_taxes: 120,
+      other_credits: 130,
+      other_debits: 140,
+      net_result: 150,
+    },
+    {
+      id: 1, // Exemplo de valor numérico
+      type: 'pedido', // Exemplo de tipo
+      order_id: '12345',
+      reference_id: 'ref12345',
+      order_date: new Date(), // Pode ser um Date ou uma string
+      sale_value: 500.0,
+      refund_sale: 50.0,
+      commission: 20.0,
+      refund_commission: 5.0,
+      shipping_fee: 10.0,
+      refund_shipping_fee: 2.0,
+      campaigns: 1,
+      refund_campaigns: 0.5,
+      taxes: 25.0,
+      refund_taxes: 5.0,
+      other_credits: 10.0,
+      other_debits: 3.0,
+      net_result: 450.0,
+      sequence_id: 'seq123', // Opcional
+      integrator_id: 'integrator123', // Opcional
+      shipping_id: 'shipping123', // Opcional
+      marketplace: 'marketplaceXYZ', // Opcional
+      account: 'contaABC', // Opcional
+      invoice_number: 'inv123456', // Opcional
+      invoice_series: 'serie123', // Opcional
+      release_date: new Date(), // Opcional
+      sync_date: new Date(), // Opcional
+      user_id: 5, // Opcional
+      status: 'Pendente', // Opcional
+    },
+  ];
 
   public pageControl: PageControl = {
     take: 10,
     page: 1,
     itemCount: 0,
     pageCount: 0,
-    orderField: "id",
+    orderField: 'id',
     order: Order.ASC,
   };
   @Input() home!: boolean;
@@ -94,8 +198,7 @@ export class TableOrdersComponent {
   constructor(
     private readonly _toastr: ToastrService,
     private readonly _orderService: OrderService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     // this.subscription = this._sidebarService.accountIdAlterado$.subscribe(
@@ -108,16 +211,18 @@ export class TableOrdersComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const {filters, searchTerm, loading} = changes;
+    const { filters, searchTerm, loading } = changes;
 
-    if (searchTerm?.previousValue && searchTerm?.currentValue !== searchTerm?.previousValue) {
+    if (
+      searchTerm?.previousValue &&
+      searchTerm?.currentValue !== searchTerm?.previousValue
+    ) {
       this._onSearch();
     } else if (!loading?.currentValue) {
       this._onSearch();
     } else if (filters?.previousValue && filters?.currentValue) {
       this._onSearch();
     }
-
   }
 
   ngOnDestroy() {
@@ -139,13 +244,16 @@ export class TableOrdersComponent {
   }
 
   search(): void {
+    return;
     this._initOrStopLoading();
 
     this._orderService
-      .getOrders(this.pageControl, this.filters)
-      .pipe(finalize(() => {
-        this._initOrStopLoading()
-      }))
+      .get(this.pageControl, this.filters)
+      .pipe(
+        finalize(() => {
+          this._initOrStopLoading();
+        })
+      )
       .subscribe((res) => {
         this.orders = res.data;
 
@@ -153,7 +261,6 @@ export class TableOrdersComponent {
         this.pageControl.itemCount = res.total;
         this.pageControl.pageCount = res.last_page;
       });
-
   }
 
   onClickOrderBy(slug: string, order: boolean) {
@@ -178,4 +285,12 @@ export class TableOrdersComponent {
     this.search();
   }
 
+  // Utils
+  public toggleExpanded(element) {
+    if (this.expanded === element) {
+      this.expanded = null;
+    } else {
+      this.expanded = element;
+    }
+  }
 }

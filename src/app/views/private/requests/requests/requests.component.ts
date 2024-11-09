@@ -13,8 +13,6 @@ import {
 import dayjs from 'dayjs';
 import {requestCards} from "@models/requestOrder";
 import { ToastrService } from 'ngx-toastr';
-import { DialogOrderComponent } from '@shared/dialogs/dialog-order/dialog-order.component';
-import { OrderService } from '@services/order.service';
 
 @Component({
   selector: 'app-requests',
@@ -67,7 +65,6 @@ export class RequestsComponent {
     private readonly _dialog: MatDialog,
     private readonly _fb: FormBuilder,
     private readonly _requestService: RequestService,
-    private readonly _orderService: OrderService,
     private readonly _toastrService: ToastrService
   ) {
     this._headerService.setTitle('Solicitações');
@@ -181,21 +178,7 @@ export class RequestsComponent {
   }
 
   onOrderModal(request){
-    this._orderService.getOrderById(request.order_id).subscribe(order => {
-        const dialogConfig: MatDialogConfig = {
-          width: '80%',
-          maxWidth: '850px',
-          maxHeight: '90%',
-          hasBackdrop: true,
-          closeOnNavigation: true,
-        };
 
-        this._dialog
-          .open(DialogOrderComponent, {
-            data: {order: order, edit: true},
-            ...dialogConfig
-          });
-    });
 
   }
 

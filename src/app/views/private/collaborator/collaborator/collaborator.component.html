@@ -7,15 +7,15 @@
 </div>
 
 <div class="mt-5 d-flex justify-content-end">
-  <button matRipple class="button yellow" (click)="openDialogCollaborator()">
-    <i class="fa-solid fa-circle-plus"></i> Novo Colaborador
+  <button matRipple class="button yellow" (click)="openDialogUser()">
+    <i class="fa-solid fa-circle-plus"></i> Novo Usuário
   </button>
 </div>
 
 <div id="componentTable" class="col-12 mt-4">
   <app-table-users
     [loading]="loading"
-    (onUserClick)="openDialogCollaborator($event)"
-    (onDeleteUserClick)="onDeleteCollaborator($event)">
+    (onUserClick)="openDialogUser($event)"
+    (onDeleteUserClick)="onDeleteUser($event)">
   </app-table-users>
 </div>

@@ -1,0 +1,80 @@
+@import "_variables";
+
+.profile-upload {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.upload-container {
+  border: 2px dotted #ccc;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  border-radius: 8px;
+  position: relative;
+}
+
+.upload-container.drag-over {
+  border-color: #007bff;
+}
+
+.upload-placeholder {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.upload-placeholder i {
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+
+  .template {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    i {
+      font-size: 9rem;
+    }
+  }
+}
+
+.remove-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  padding: 5px;
+  cursor: default;
+  width: 2rem;
+  height: 2rem;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.remove-image i {
+  color: #fff;
+  font-size: 16px;
+}
