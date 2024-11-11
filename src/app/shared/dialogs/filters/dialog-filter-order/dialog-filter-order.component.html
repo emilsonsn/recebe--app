@@ -10,6 +10,20 @@
 
   <form [formGroup]="form" class="row">
 
+
+
+    <div class="col-12 mb-3">
+      <p class="fw-bold fs-6 mb-2">Data</p>
+      <mat-form-field>
+        <mat-date-range-input [rangePicker]="picker">
+          <input formControlName="start_date" matStartDate placeholder="Início" readonly>
+          <input formControlName="end_date" matEndDate placeholder="Fim" readonly>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+
     <div class="col-md-12 col-12 mb-3">
       <p class="fw-bold fs-6 mb-2">Status</p>
       <mat-form-field appearance="outline">
@@ -17,29 +31,17 @@
           <mat-select-trigger>
             {{ (status.value?.[0] | status ) || ''}}
             @if ((status.value?.length || 0) > 1) {
-              <span>
-                (+{{(status.value?.length || 0) - 1}} {{status.value?.length === 2 ? 'outro' : 'outros'}})
-              </span>
+            <span>
+              (+{{(status.value?.length || 0) - 1}} {{status.value?.length === 2 ? 'outro' : 'outros'}})
+            </span>
             }
           </mat-select-trigger>
 
           <mat-option (click)="resetStatusSelection()" class="no-checkbox">Limpar seleção</mat-option>
           @for (status of filterStatus; track status) {
-            <mat-option [value]="status">{{ status | status}}</mat-option>
+          <mat-option [value]="status">{{ status | status}}</mat-option>
           }
         </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 mb-3">
-      <p class="fw-bold fs-6 mb-2">Data</p>
-      <mat-form-field>
-        <mat-date-range-input [rangePicker]="picker">
-          <input formControlName="start_date" matStartDate  placeholder="Início" readonly >
-          <input formControlName="end_date" matEndDate placeholder="Fim" readonly >
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
 
@@ -55,9 +57,9 @@
 <mat-dialog-actions>
   <div class="container">
     <div id="actionsDialog" class="flex-sm-row flex-column">
-      <!-- <div matRipple class="buttonTemplate me-auto me-sm-0 mb-sm-0 mb-2" (click)="onCancel(true)">
+      <div matRipple class="buttonTemplate me-auto me-sm-0 mb-sm-0 mb-2" (click)="onCancel(true)">
         <i class="fa-solid fa-trash"></i>
-      </div> -->
+      </div>
       <div id="buttonsDialog" class="flex-sm-row flex-column">
         <div class="col-auto">
           <button matRipple id="cancel" class="button cancel" (click)="onCancel(false)">Cancelar</button>

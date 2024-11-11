@@ -90,18 +90,18 @@
     <div class="col-md-6 mb-3">
       <span class="fw-bolder">Data do Pedido *</span>
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker" formControlName="order_date" placeholder="DD/MM/YYYY" readonly>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="orderDatePicker" formControlName="order_date" placeholder="DD/MM/YYYY" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #orderDatePicker></mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="col-md-6 mb-3">
       <span class="fw-bolder">Data de Liberação</span>
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker" formControlName="release_date" placeholder="DD/MM/YYYY" readonly>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="releaseDatePicker" formControlName="release_date" placeholder="DD/MM/YYYY" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #releaseDatePicker></mat-datepicker>
       </mat-form-field>
     </div>
 
@@ -202,23 +202,16 @@
     <div class="col-md-6 mb-3">
       <span class="fw-bolder">Data de Sincronização</span>
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker" formControlName="sync_date" placeholder="DD/MM/YYYY" readonly>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="syncDatePicker" formControlName="sync_date" placeholder="DD/MM/YYYY" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="syncDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #syncDatePicker></mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="col-md-6 mb-3">
-      <span class="fw-bolder">ID do Usuário</span>
-      <mat-form-field appearance="outline">
-        <input type="number" formControlName="user_id" matInput placeholder="Insira o ID do Usuário" />
-      </mat-form-field>
-    </div>
-
-    <div class="col-md-6 mb-3">
-      <span class="fw-bolder">Solicitante *</span>
+      <span class="fw-bolder">ID do Usuário *</span>
       <mat-form-field>
-        <mat-select formControlName="user_id" placeholder="Consultor">
+        <mat-select formControlName="user_id" placeholder="ID do Usuário">
           <mat-option>
             <ngx-mat-select-search [formControl]="userFilterCtrl" placeholderLabel="Procure pelo usuário"
               i18n-placeholderLabel noEntriesFoundLabel="Usuário não encontrado" i18n-noEntriesFoundLabel>

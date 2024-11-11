@@ -37,8 +37,9 @@ export class OrdersComponent {
     solicitationPendings: 0,
     solicitationFinished: 0,
   });
-  public filtersFromDialog: FormGroup;
+
   public filters: OrderFilters;
+
   public loading: boolean = false;
 
   itemsRequests: Signal<ISmallInformationCard[]> = computed<
@@ -88,14 +89,7 @@ export class OrdersComponent {
       });
   }
 
-  ngOnInit() {
-    this.filtersFromDialog = this._fb.group({
-      start_date: [''],
-      end_date: [''],
-      status: new FormControl([]),
-      name: [''],
-    });
-  }
+  ngOnInit() {}
 
   public openOrderDialog(data?) {
     const dialogConfig: MatDialogConfig = {
@@ -161,26 +155,24 @@ export class OrdersComponent {
 
     this._dialog
       .open(DialogFilterOrderComponent, {
-        data: { ...this.filtersFromDialog.getRawValue() },
+        data: { ...this.filters },
         ...dialogConfig,
       })
       .afterClosed()
       .subscribe({
         next: (res) => {
           if (res) {
-            this.filters = {
-              ...res.filters,
-              start_date: res.filters?.start_date
-                ? dayjs(res.filters.start_date).format('YYYY-MM-DD')
-                : '',
-              end_date: res.filters?.end_date
-                ? dayjs(res.filters.end_date).format('YYYY-MM-DD')
-                : '',
-            };
-
             !res.clear
-              ? this.filtersFromDialog.patchValue(res.filters)
-              : this.filtersFromDialog.reset();
+              ? (this.filters = {
+                  ...res.filters,
+                  start_date: res.filters?.start_date
+                    ? dayjs(res.filters.start_date).format('YYYY-MM-DD')
+                    : '',
+                  end_date: res.filters?.end_date
+                    ? dayjs(res.filters.end_date).format('YYYY-MM-DD')
+                    : '',
+                })
+              : (this.filters = null);
           }
         },
       });

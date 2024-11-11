@@ -92,16 +92,16 @@
           @if (!home) {
           <td>
             <div id="buttons" class="d-flex justify-content-end">
-              <div matRipple class="buttonTemplate" (click)="onViewOrder.emit(
+              <!-- <div matRipple class="buttonTemplate" (click)="$event.stopPropagation(); onViewOrder.emit(
                       {
                         edit: false,
                         order : order
                       }
                     )">
                 <i class="fa-solid fa-eye"></i>
-              </div>
+              </div> -->
 
-              <div matRipple class="buttonTemplate" (click)="onEditOrder.emit(
+              <div matRipple class="buttonTemplate" (click)="$event.stopPropagation(); onEditOrder.emit(
                       {
                         edit: true,
                         order : order

@@ -91,7 +91,7 @@ export class DialogOrderComponent {
       this.isNewOrder = false;
       this.title = 'Editar Pedido';
 
-      this.form.patchValue(this._data);
+      this.form.patchValue(this._data.order);
     }
   }
 
@@ -103,16 +103,26 @@ export class DialogOrderComponent {
     if (this.isNewOrder) {
       this.post({
         ...this.form.getRawValue(),
-        release_date : this.form.get('release_date').value ? dayjs(this.form.get('release_date').value).format('YYYY-MM-DD') : null,
-        order_date : this.form.get('order_date').value ? dayjs(this.form.get('order_date').value).format('YYYY-MM-DD') : null,
-        sync_date : this.form.get('sync_date').value ? dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD') : null,
+        release_date: this.form.get('release_date').value
+          ? dayjs(this.form.get('release_date').value).format('YYYY-MM-DD')
+          : null,
+        order_date: this.form.get('order_date').value
+          ? dayjs(this.form.get('order_date').value).format('YYYY-MM-DD')
+          : null,
+        sync_date: this.form.get('sync_date').value
+          ? dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD')
+          : null,
       });
     } else {
       this.patch(this._data?.id, {
         ...this.form.getRawValue(),
-        release_date : dayjs(this.form.get('release_date').value).format('YYYY-MM-DD'),
-        order_date : dayjs(this.form.get('order_date').value).format('YYYY-MM-DD'),
-        sync_date : dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD'),
+        release_date: dayjs(this.form.get('release_date').value).format(
+          'YYYY-MM-DD'
+        ),
+        order_date: dayjs(this.form.get('order_date').value).format(
+          'YYYY-MM-DD'
+        ),
+        sync_date: dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD'),
       });
     }
   }
