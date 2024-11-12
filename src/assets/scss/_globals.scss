@@ -143,8 +143,8 @@ mat-form-field {
   border: none;
   color: $white-100;
 
-  &.yellow {
-    background-color: #A28F3F;
+  &.primary {
+    background-color: $primary;
 
     &:hover {
       opacity: 0.9;
@@ -307,7 +307,7 @@ mat-form-field {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  background-color: #A28F3F;
+  background-color: $terciary;
   font-size: larger;
   cursor: pointer;
   margin-right: 0.5rem;

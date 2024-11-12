@@ -120,7 +120,7 @@ export class OrdersComponent {
 
   public openOrderImportDialog() {
     const dialogConfig: MatDialogConfig = {
-      width: '80%',
+      width: '35%',
       maxWidth: '1000px',
       maxHeight: '90%',
       hasBackdrop: true,

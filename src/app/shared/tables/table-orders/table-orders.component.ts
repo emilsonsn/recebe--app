@@ -244,7 +244,7 @@ export class TableOrdersComponent {
   }
 
   search(): void {
-    return;
+    // return;
     this._initOrStopLoading();
 
     this._orderService

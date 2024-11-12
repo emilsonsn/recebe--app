@@ -60,12 +60,12 @@ header {
         cursor: pointer;
         font-size: 16px;
         background-color: $primary;
-        color: $black-600;
+        color: $white-100;
         box-shadow: $header-button-box-shadow;
 
         &:hover {
           background-color: $primary;
-          color: $black-600;
+          color: $white-100;
           opacity: .9;
         }
 
@@ -112,8 +112,8 @@ header {
           border-radius: 8px;
 
           &:hover {
-            background-color: $primary;
-            color: $black-600;
+            background-color: $terciary;
+            color: $white-100;
             box-shadow: 0 0 10px 0 rgba(223, 198, 255, 0.37);
           }
 

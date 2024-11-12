@@ -5,16 +5,16 @@
         <mat-spinner></mat-spinner>
       </div>
     }
-  
+
     <div class="d-flex align-items-center justify-content-between">
       <span class="fw-bold fs-5">Solicitar ao financeiro</span>
       <div matRipple class="close" (click)="onCancel()">
         <i class="fa-solid fa-close"></i>
       </div>
     </div>
-  
+
     <mat-divider class="my-3"></mat-divider>
-  
+
     <form [formGroup]="form" class="row">
       <div class="col-md-6 mb-3">
         <span class="fw-bolder">Tipo de Solicitação *</span>
@@ -27,7 +27,7 @@
         </mat-form-field>
       </div>
     </form>
-  
+
   </mat-dialog-content>
   <mat-dialog-actions>
     <div class="w-100 me-2">
@@ -37,10 +37,9 @@
             <button matRipple id="cancel" class="button cancel" (click)="onCancel()">Cancelar</button>
           </div>
           <div class="col-auto">
-            <button matRipple id="submit" class="button yellow" (click)="!loading ? onConfirm() : null">Criar</button>
+            <button matRipple id="submit" class="button primary" (click)="!loading ? onConfirm() : null">Criar</button>
           </div>
         </div>
       </div>
     </div>
   </mat-dialog-actions>
-  

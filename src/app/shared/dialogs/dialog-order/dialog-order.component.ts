@@ -114,15 +114,17 @@ export class DialogOrderComponent {
           : null,
       });
     } else {
-      this.patch(this._data?.id, {
+      this.patch(this._data.order.id, {
         ...this.form.getRawValue(),
-        release_date: dayjs(this.form.get('release_date').value).format(
-          'YYYY-MM-DD'
-        ),
-        order_date: dayjs(this.form.get('order_date').value).format(
-          'YYYY-MM-DD'
-        ),
-        sync_date: dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD'),
+        release_date: this.form.get('release_date').value
+          ? dayjs(this.form.get('release_date').value).format('YYYY-MM-DD')
+          : null,
+        order_date: this.form.get('order_date').value
+          ? dayjs(this.form.get('order_date').value).format('YYYY-MM-DD')
+          : null,
+        sync_date: this.form.get('sync_date').value
+          ? dayjs(this.form.get('sync_date').value).format('YYYY-MM-DD')
+          : null,
       });
     }
   }
@@ -137,11 +139,11 @@ export class DialogOrderComponent {
       )
       .subscribe({
         next: (res) => {
-          this._toastr.success('Solicitação cadastrada com sucesso!');
+          this._toastr.success('Ordem cadastrada com sucesso!');
           this._dialogRef.close(true);
         },
         error: (error) => {
-          this._toastr.error('Ocorreu um erro ao cadastrar a solicitação.');
+          this._toastr.error('Ocorreu um erro ao cadastrar a ordem!');
         },
       });
   }
@@ -156,11 +158,11 @@ export class DialogOrderComponent {
       )
       .subscribe({
         next: (res) => {
-          this._toastr.success('Solicitação atualizada com sucesso!');
+          this._toastr.success('Ordem atualizada com sucesso!');
           this._dialogRef.close(true);
         },
         error: (error) => {
-          this._toastr.error('Ocorreu um erro ao cadastrar a solicitação.');
+          this._toastr.error('Ocorreu um erro ao atualizar a ordem!');
         },
       });
   }
