@@ -2,14 +2,9 @@ import { Component, computed, Signal, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { RequestOrderStatus } from '@models/requestOrder';
 import { HeaderService } from '@services/header.service';
 import { OrderService } from '@services/order.service';
 import { DialogConfirmComponent } from '@shared/dialogs/dialog-confirm/dialog-confirm.component';
-import {
-  DialogFilterOrderComponent,
-  OrderFilters,
-} from '@shared/dialogs/filters/dialog-filter-order/dialog-filter-order.component';
 import dayjs from 'dayjs';
 import { ISmallInformationCard } from '@models/cardInformation';
 import { ToastrService } from 'ngx-toastr';
@@ -38,7 +33,7 @@ export class OrdersComponent {
     solicitationFinished: 0,
   });
 
-  public filters: OrderFilters;
+  public filters;
 
   public loading: boolean = false;
 
@@ -145,37 +140,7 @@ export class OrdersComponent {
   }
 
   public openOrderFilterDialog() {
-    const dialogConfig: MatDialogConfig = {
-      width: '80%',
-      maxWidth: '550px',
-      maxHeight: '90%',
-      hasBackdrop: true,
-      closeOnNavigation: true,
-    };
 
-    this._dialog
-      .open(DialogFilterOrderComponent, {
-        data: { ...this.filters },
-        ...dialogConfig,
-      })
-      .afterClosed()
-      .subscribe({
-        next: (res) => {
-          if (res) {
-            !res.clear
-              ? (this.filters = {
-                  ...res.filters,
-                  start_date: res.filters?.start_date
-                    ? dayjs(res.filters.start_date).format('YYYY-MM-DD')
-                    : '',
-                  end_date: res.filters?.end_date
-                    ? dayjs(res.filters.end_date).format('YYYY-MM-DD')
-                    : '',
-                })
-              : (this.filters = null);
-          }
-        },
-      });
   }
 
   public onDeleteOrder(order: OrderResponse) {
@@ -228,6 +193,5 @@ export class OrdersComponent {
     this.loading = !this.loading;
   }
 
-  protected readonly RequestOrderStatus = RequestOrderStatus;
   protected readonly Object = Object;
 }

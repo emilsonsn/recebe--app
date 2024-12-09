@@ -1,6 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { RequestStatus } from '@models/request';
-import { RequestOrderStatus } from '@models/requestOrder';
 import { Status } from '@models/status';
 
 @Pipe({
@@ -8,7 +6,7 @@ import { Status } from '@models/status';
 })
 export class StatusPipe implements PipeTransform {
 
-  transform(value: string | Status | RequestOrderStatus | RequestStatus | Request) {
+  transform(value) {
     switch (value) {
       case Status.Pending:
         return 'Pendente';

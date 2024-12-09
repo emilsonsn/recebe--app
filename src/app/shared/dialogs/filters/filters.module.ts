@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogFilterOrderComponent } from './dialog-filter-order/dialog-filter-order.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ComponentsModule } from '@shared/components/components.module';
 import { DirectivesModule } from '@shared/directives/directives.module';
@@ -21,17 +20,14 @@ import { MatRippleModule } from '@angular/material/core';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { DialogFilterRequestComponent } from './dialog-filter-request/dialog-filter-request.component';
 
 const filters = [
-  DialogFilterOrderComponent,
 
 ]
 
 @NgModule({
   declarations: [
     filters,
-    DialogFilterRequestComponent
   ],
   imports: [
     CommonModule,

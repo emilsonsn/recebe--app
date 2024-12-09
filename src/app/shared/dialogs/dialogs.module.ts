@@ -21,21 +21,11 @@ import {FiltersModule} from './filters/filters.module';
 import {DialogCollaboratorComponent} from './dialog-collaborator/dialog-collaborator.component';
 import {CdkTextareaAutosize, TextFieldModule} from '@angular/cdk/text-field';
 import {MatRippleModule} from '@angular/material/core';
-import {DialogProviderComponent} from './dialog-provider/dialog-provider.component';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
-import {DialogServiceComponent} from './dialog-service/dialog-service.component';
-import {DialogConstructionComponent} from './dialog-construction/dialog-construction.component';
-import {DialogClientComponent} from './dialog-client/dialog-client.component';
-import {DialogRequestComponent} from './dialog-request/dialog-request.component';
-import {DialogTypeProviderComponent} from './dialog-type-provider/dialog-type-provider.component';
 import {TablesModule} from '@shared/tables/tables.module';
-import {DialogTypeServiceComponent} from './dialog-type-service/dialog-type-service.component';
-import {DialogTypeUserSectorComponent} from './dialog-type-user-sector/dialog-type-user-sector.component';
-import {DialogTaskComponent} from './dialog-task/dialog-task.component';
 import {MatIcon} from "@angular/material/icon";
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
-import {DialogOrderSolicitationComponent} from './dialog-order-solicitation/dialog-order-solicitation.component';
 import { DialogOrderComponent } from './dialog-order/dialog-order.component';
 import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-import.component';
 
@@ -44,16 +34,6 @@ import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-i
   declarations: [
     DialogConfirmComponent,
     DialogCollaboratorComponent,
-    DialogProviderComponent,
-    DialogServiceComponent,
-    DialogConstructionComponent,
-    DialogClientComponent,
-    DialogRequestComponent,
-    DialogTypeProviderComponent,
-    DialogTypeServiceComponent,
-    DialogTypeUserSectorComponent,
-    DialogTaskComponent,
-    DialogOrderSolicitationComponent,
     DialogOrderComponent,
     DialogOrderImportComponent
   ],

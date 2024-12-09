@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { ApiResponse, ApiResponsePageable, DeleteApiResponse, PageControl } from '@models/application';
 import { OrderResponse } from '@models/order';
-import {Banco, RequestOrder} from '@models/requestOrder';
 import { Utils } from '@shared/utils';
 import { Observable } from 'rxjs';
 

@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { Order, PageControl } from '@models/application';
 import { OrderResponse } from '@models/order';
-import { RequestOrderStatus } from '@models/requestOrder';
 import { OrderService } from '@services/order.service';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, Subscription } from 'rxjs';
@@ -37,7 +36,6 @@ import { finalize, Subscription } from 'rxjs';
 export class TableOrdersComponent {
   protected expanded: any;
   private subscription: Subscription;
-  protected orderStatus = RequestOrderStatus;
 
   @Input()
   filters;
