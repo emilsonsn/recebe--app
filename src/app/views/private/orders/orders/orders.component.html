@@ -1,40 +1,73 @@
-<div class="row mt-4">
+<!-- <div class="row mt-4">
   @for (item of itemsRequests(); track item) {
     <div class="col-lg-4 col-md-6">
       <app-small-information-card [data]="item"></app-small-information-card>
     </div>
   }
-</div>
+</div> -->
 
-<div id="componentHeaderTemplate">
-  <div id="componentHeader">
+<app-header-page-component [hasFilter]="true">
 
-    <div>
-      <!-- <app-search-input
-        (onSearchInputChanged)="handleSearchTerm($event)">
-      </app-search-input> -->
-    </div>
+  <div id="searchInput">
+    <app-search-input (onSearchInputChanged)="handleSearchTerm($event)">
+    </app-search-input>
+  </div>
 
-    <div id="options">
-      @if (true) {
-        <div id="filter" matRipple (click)="openOrderFilterDialog()">
-          <i class="fa-solid fa-filter"></i>
+  <div id="buttons">
+      <button matRipple class="button primary" (click)="openOrderImportDialog()">
+        <i class="fa-solid fa-upload"></i> Importar
+      </button>
+
+      <button matRipple class="button primary" (click)="openOrderDialog()">
+        <i class="fa-solid fa-plus"></i> Pedido
+      </button>
+  </div>
+
+  <div id="filters">
+    <form [formGroup]="formFilters">
+      <div class="row">
+        <div class="col-md-4 mb-md-0 mb-2">
+          <mat-form-field>
+            <mat-select formControlName="user_id" placeholder="Usuário">
+              <mat-option>
+                <ngx-mat-select-search [formControl]="userFilterCtrl" placeholderLabel="Procure pelo usuário"
+                  i18n-placeholderLabel noEntriesFoundLabel="Usuário não encontrado" i18n-noEntriesFoundLabel>
+                </ngx-mat-select-search>
+              </mat-option>
+              @if(formFilters?.get('user_id').value) {
+                <mat-option [value]="''" (click)="formFilters?.get('user_id').setValue(''); updateFilters()" style="color: #dc3545;">
+                  Limpar Filtro
+                </mat-option>
+              }
+              <mat-option *ngFor="let user of filteredUsers | async" [value]="user.id">
+                {{ user.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-      }
 
-      <div id="buttons">
-        <button matRipple class="button primary" (click)="openOrderImportDialog()">
-          <i class="fa-solid fa-upload"></i> Importar
-        </button>
-
-        <button matRipple class="button primary" (click)="openOrderDialog()">
-          <i class="fa-solid fa-plus"></i> Pedido
-        </button>
+        <div class="col-md-4 mb-md-0 mb-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Data do Pedido</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="order_date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
       </div>
+    </form>
 
+    <div class="d-flex justify-content-end flex-wrap gap-2 mt-2">
+      <button matRipple class="button bgRed" (click)="clearFormFilters()">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+      <button matRipple class="button primary" (click)="updateFilters()">
+        <i class="fa-solid fa-magnifying-glass"></i> Pesquisar
+      </button>
     </div>
   </div>
-</div>
+
+</app-header-page-component>
 
 <div id="componentTable" class="col-12 mt-4">
   <app-table-orders
@@ -42,6 +75,7 @@
     (onEditOrder)="openOrderDialog($event)"
     (onDeleteOrder)="onDeleteOrder($event)"
     [loading]="loading"
+    [searchTerm]="searchTerm"
     [filters]="filters">
   </app-table-orders>
 </div>

@@ -8,13 +8,22 @@ import { DialogConfirmComponent } from '@shared/dialogs/dialog-confirm/dialog-co
 import dayjs from 'dayjs';
 import { ISmallInformationCard } from '@models/cardInformation';
 import { ToastrService } from 'ngx-toastr';
-import { finalize } from 'rxjs';
+import {
+  debounceTime,
+  finalize,
+  map,
+  ReplaySubject,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { OrderData } from '@models/dashboard';
 import { ApiResponse } from '@models/application';
 import { DashboardService } from '@services/dashboard.service';
 import { DialogOrderComponent } from '@shared/dialogs/dialog-order/dialog-order.component';
 import { OrderResponse } from '@models/order';
 import { DialogOrderImportComponent } from '@shared/dialogs/dialog-order-import/dialog-order-import.component';
+import { User } from '@models/user';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-orders',
@@ -22,7 +31,25 @@ import { DialogOrderImportComponent } from '@shared/dialogs/dialog-order-import/
   styleUrl: './orders.component.scss',
 })
 export class OrdersComponent {
-  dashboardCards = signal<OrderData>({
+  // Utils
+  public loading: boolean = false;
+  protected _onDestroy = new Subject<void>();
+
+  // Filters
+  public filters;
+  protected searchTerm: string = '';
+  protected formFilters: FormGroup;
+
+  // User Select
+  protected userSelect: User[] = [];
+  protected userCtrl: FormControl<any> = new FormControl<any>(null);
+  protected userFilterCtrl: FormControl<any> = new FormControl<string>('');
+  protected filteredUsers: ReplaySubject<any[]> = new ReplaySubject<any[]>(
+    1
+  );
+
+  // Cards
+  protected dashboardCards = signal<OrderData>({
     ordersByDay: 0,
     ordersByWeek: 0,
     ordersByMonth: 0,
@@ -33,11 +60,7 @@ export class OrdersComponent {
     solicitationFinished: 0,
   });
 
-  public filters;
-
-  public loading: boolean = false;
-
-  itemsRequests: Signal<ISmallInformationCard[]> = computed<
+  protected itemsRequests: Signal<ISmallInformationCard[]> = computed<
     ISmallInformationCard[]
   >(() => [
     {
@@ -72,19 +95,26 @@ export class OrdersComponent {
     private readonly _fb: FormBuilder,
     private readonly _orderService: OrderService,
     private readonly _toastr: ToastrService,
-    private readonly _dashboardService: DashboardService
+    private readonly _dashboardService: DashboardService,
+    private readonly _userService: UserService
   ) {
     this._headerService.setTitle('Pedidos');
     this._headerService.setSubTitle('');
 
-    _dashboardService
-      .getDashboardCards()
-      .subscribe((c: ApiResponse<OrderData>) => {
-        this.dashboardCards.set(c.data);
-      });
+    this.getUsersFromBack();
+    // _dashboardService
+    //   .getDashboardCards()
+    //   .subscribe((c: ApiResponse<OrderData>) => {
+    //     this.dashboardCards.set(c.data);
+    //   });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formFilters = this._fb.group({
+      user_id : [''],
+      order_date : [''],
+    });
+  }
 
   public openOrderDialog(data?) {
     const dialogConfig: MatDialogConfig = {
@@ -139,9 +169,7 @@ export class OrdersComponent {
       });
   }
 
-  public openOrderFilterDialog() {
-
-  }
+  public openOrderFilterDialog() {}
 
   public onDeleteOrder(order: OrderResponse) {
     const dialogConfig: MatDialogConfig = {
@@ -188,10 +216,63 @@ export class OrdersComponent {
   }
 
   // Utils
-
   public _initOrStopLoading() {
     this.loading = !this.loading;
   }
 
-  protected readonly Object = Object;
+  // Filters
+  public updateFilters() {
+    this.filters = {
+      ...this.formFilters.getRawValue(),
+      order_date: this.formFilters.get('order_date').value ? dayjs(this.formFilters.get('order_date').value).format('YYYY-MM-DD') : ''
+    };
+  }
+
+  public clearFormFilters() {
+    this.formFilters.patchValue({
+      user_id: '',
+      order_date: '',
+    });
+
+    this.updateFilters();
+  }
+
+  protected handleSearchTerm(res) {
+    this.searchTerm = res;
+
+    this.updateFilters();
+  }
+
+  protected prepareFilterClientCtrl() {
+    this.userFilterCtrl.valueChanges
+      .pipe(
+        takeUntil(this._onDestroy),
+        debounceTime(100),
+        map((search: string | null) => {
+          if (!search) {
+            return this.userSelect.slice();
+          } else {
+            search = search.toLowerCase();
+            return this.userSelect.filter((user) =>
+              user.name.toLowerCase().includes(search)
+            );
+          }
+        })
+      )
+      .subscribe((filtered) => {
+        this.filteredUsers.next(filtered);
+      });
+  }
+
+  // Getters
+
+  public getUsersFromBack() {
+    this._userService.getUsers().subscribe((res) => {
+      this.userSelect = res.data;
+
+      this.filteredUsers.next(this.userSelect.slice());
+
+      this.prepareFilterClientCtrl();
+    });
+  }
 }

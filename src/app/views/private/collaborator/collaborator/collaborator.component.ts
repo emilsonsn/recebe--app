@@ -49,7 +49,7 @@ export class CollaboratorComponent {
   ) {}
 
   ngOnInit(): void {
-    this._getCards();
+    // this._getCards();
   }
 
   openDialogUser(user?: User) {
