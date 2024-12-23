@@ -10,8 +10,9 @@ export interface User {
   sector_id: string;
   whatsapp: number;
   status : UserStatus;
-  createdAt : string;
-  updatedAt : string;
+  is_active : boolean;
+  created_at : string;
+  updated_at : string;
   admin?: boolean;
   photo?: string;
 

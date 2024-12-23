@@ -4,105 +4,124 @@
     <table class="table table-responsive">
       <thead>
         @for (col of columns; track col) {
-          <th
-            [class.hasorder]="col.order"
-            [ngStyle]="{ cursor: 'pointer' }"
-            [class.active-order]="pageControl.orderField === col.slug"
-          >
-            <!--(click)="onClickOrderBy(col.slug, col.order)" -->
-            <div
-              class="{{col.align}}"
-              style="color: #a2a1a8"
-            >
-              {{ col.title }}
-              <i class="material-icons" *ngIf="pageControl.orderField === col.slug">
-                {{
-                  pageControl.order === "DESC" ? "arrow_downward" : "arrow_upward"
-                }}
-              </i>
-            </div>
-          </th>
+        <th [class.hasorder]="col.order" [class.active-order]="pageControl.orderField === col.slug">
+          <!-- [ngStyle]="{ cursor: 'pointer' }" -->
+          <!--(click)="onClickOrderBy(col.slug, col.order)" -->
+          <div class="{{col.align}} textNoWrap" style="color: #a2a1a8">
+            {{ col.title }}
+            <i class="material-icons" *ngIf="pageControl.orderField === col.slug">
+              {{
+              pageControl.order === "DESC" ? "arrow_downward" : "arrow_upward"
+              }}
+            </i>
+          </div>
+        </th>
         }
       </thead>
       <tbody>
-      <tr *ngIf="loading">
-        <td [attr.colspan]="columns.length + 1">
-          <div id="mat-loading">
-            <mat-spinner></mat-spinner>
-          </div>
-        </td>
-      </tr>
+        <tr *ngIf="loading">
+          <td [attr.colspan]="columns.length + 1">
+            <div id="mat-loading">
+              <mat-spinner></mat-spinner>
+            </div>
+          </td>
+        </tr>
         @if (!loading) {
-          <tr *ngIf="!users?.length">
-            <td [attr.colspan]="columns.length + 1" class="text-center">
-              <div>Nenhum resultado encontrado</div>
-            </td>
-          </tr>
-          @for (user of users; track user) {
-            <tr
-              class="table-line-hover"
-              style="outline: none; cursor: pointer"
-            >
-              <td>
-                <div
-                  class="d-flex align-items-center gap-2"
-                  style="white-space: nowrap"
-                >
-                  <app-avatar
-                    [imageUrl]="user?.photo"
-                    [altText]="user?.name"
-                    [color]="'#3b444b'"
-                    [onCircle]="true"
-                  ></app-avatar>
-                  {{ user?.name }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ user?.cpf_cnpj | cpfCnpjMask }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ user?.birth_date | date: "dd/MM/YYYY" }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ user?.whatsapp | phoneMask }}
-                </div>
-              </td>
-              <td>
-                <div class="text-center">
-                  {{ user?.email }}
-                </div>
-              </td>
-              <td>
-                <div class="d-flex justify-content-end">
-                  <div matRipple class="buttonTemplate" (click)="onUserClick.emit(user)">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </div>
+        <tr *ngIf="!users?.length">
+          <td [attr.colspan]="columns.length + 1" class="text-center">
+            <div>Nenhum resultado encontrado</div>
+          </td>
+        </tr>
+        @for (user of users; track user) {
+        <tr class="table-line-hover" [ngStyle]="{ 'background-color': user == expanded ? '#efefef' : 'transparent' }"
+          (click)="toggleExpanded(user)">
+          <td>
+            <div class="d-flex align-items-center gap-2" style="white-space: nowrap">
+              <app-avatar [imageUrl]="user?.photo" [altText]="user?.name" [color]="'#3b444b'"
+                [onCircle]="true"></app-avatar>
+              {{ user?.name }}
+            </div>
+          </td>
+          <td>
+            <div class="text-center textNoWrap">
+              {{ user?.email }}
+            </div>
+          </td>
+          <td>
+            <div class="text-center textNoWrap">
+              {{ user?.cpf_cnpj | cpfCnpjMask }}
+            </div>
+          </td>
+          <td>
+            <div class="text-center textNoWrap">
+              {{ user?.phone | phoneMask }}
+            </div>
+          </td>
+          <td>
+            <div class="status" [ngClass]="user?.is_active ? 'active' : 'inactive'">
+              {{ user?.is_active ? "Ativo" : "Inativo" }}
+            </div>
+          </td>
+          <td>
+            <div class="d-flex justify-content-end">
+              <div matRipple class="buttonTemplate" (click)="onUserClick.emit(user)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </div>
 
-                  <div matRipple class="buttonTemplate" (click)="onDeleteUserClick.emit(user?.id)">
-                    <i class="fa-solid fa-trash"></i>
+              <div matRipple class="buttonTemplate" (click)="onDeleteUserClick.emit(user?.id)">
+                <i class="fa-solid fa-trash"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="14" class="p-0">
+            <div [@detailExpand]="user == expanded ? 'expanded' : 'collapsed'" style="overflow: hidden;">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID</span>
+                    <div>
+                      {{ user?.id ?? '-' }}
+                    </div>
                   </div>
                 </div>
-              </td>
-            </tr>
-          }
+                <div class="col-md-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Whatsapp</span>
+                    <div>
+                      {{ (user?.whatsapp | phoneMask) ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Criado em</span>
+                    <div>
+                      {{ (user?.created_at | date:"dd/MM/YYYY HH:mm:ss" ) ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Atualizado em</span>
+                    <div>
+                      {{ (user?.updated_at | date:"dd/MM/YYYY HH:mm:ss" ) ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        }
         }
       </tbody>
     </table>
   </div>
-  <mat-paginator
-    [length]="pageControl.itemCount"
-    [pageSize]="pageControl.take"
-    [showFirstLastButtons]="true"
-    [pageSizeOptions]="[10, 25, 50, 100]"
-    [hidePageSize]="false"
-    [pageIndex]="pageControl.page - 1"
-    (page)="pageEvent($event)"
-  >
+  <mat-paginator [length]="pageControl.itemCount" [pageSize]="pageControl.take" [showFirstLastButtons]="true"
+    [pageSizeOptions]="[10, 25, 50, 100]" [hidePageSize]="false" [pageIndex]="pageControl.page - 1"
+    (page)="pageEvent($event)">
   </mat-paginator>
 
 </div>

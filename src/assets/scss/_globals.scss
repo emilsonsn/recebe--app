@@ -302,6 +302,10 @@ mat-form-field {
   background-color: $red;
 }
 
+.textNoWrap {
+  text-wrap: nowrap;
+}
+
 .buttonTemplate {
   display: flex;
   width: 2.3rem;

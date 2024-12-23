@@ -30,25 +30,25 @@
       <div class="col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput type="text" formControlName="name">
+          <input matInput type="text" formControlName="name" placeholder="Nome">
         </mat-form-field>
       </div>
       <div class="col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>E-mail</mat-label>
-          <input matInput type="email" formControlName="email" pattern="{{ utils.patternEmail }}">
+          <input matInput type="email" formControlName="email" pattern="{{ utils.patternEmail }}" placeholder="xxxx@xxx.xxx">
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>CPF/CNPJ</mat-label>
-          <input matInput type="text" formControlName="cpf_cnpj" mask="000.000.000-00||00.000.000/0000-00">
+          <input matInput type="text" formControlName="cpf_cnpj" mask="000.000.000-00||00.000.000/0000-00" placeholder="000.000.000-00 ou 00.000.000/0000-00">
         </mat-form-field>
       </div>
       <div class=" col-md-6 col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>Data de nascimento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="birth_date">
+          <input matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="DD/MM/YYYY">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -56,23 +56,27 @@
       <div class="col-md-6 col-12 mb-3">
         <mat-form-field appearance="outline" required>
           <mat-label>Celular</mat-label>
-          <input type="text" formControlName="whatsapp" matInput mask="(00) 00000-0000"
-            title="Digite um número de celular válido (xx)xxxxx-xxxx" required />
-          <mat-error *ngIf="form.get('whatsapp')?.value === '' || !validateCellphoneNumber(form.get('whatsapp'))">
-            Digite um número de celular válido (xx)xxxxx-xxxx
-          </mat-error>
+          <input type="text" formControlName="whatsapp" matInput mask="(00) 00000-0000" placeholder="(xx) xxxxx-xxxx" />
         </mat-form-field>
       </div>
       <div class="col-md-6 col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input type="text" formControlName="phone" matInput mask="(00) 0000-0000"
-            title="Digite um número de telefone válido (xx)xxxx-xxxx ou (xx)xxxxx-xxxx" />
-          <mat-error *ngIf="form.get('phone')?.value === '' || !validatePhoneNumber(form.get('phone'))">O telefone deve
-            estar no formato válido
-            (xx)xxxx-xxxx.</mat-error>
+          <input type="text" formControlName="phone" matInput mask="(00) 0000-0000||(00) 00000-0000" placeholder="(xx) xxxx-xxxx ou (xx) xxxxx-xxxx" />
         </mat-form-field>
       </div>
+      <!-- @if(!isNewUser) {
+        <div class="col-md-6 col-12 md-3">
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="is_active" placeholder="Status">
+              @for (status of statusSelect; track status) {
+              <mat-option [value]="status.value">{{ status.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      } -->
     </div>
   </form>
 
@@ -91,8 +95,7 @@
           <button matRipple id="cancel" class="button cancel" (click)="onCancel()">Cancelar</button>
         </div>
         <div class="col-auto">
-          <button matRipple id="submit" class="button primary" (click)="onSubmit(form)">{{isNewCollaborator ? 'Criar' :
-            'Salvar'}}</button>
+          <button matRipple id="submit" class="button primary" (click)="onSubmit(form)">{{isNewUser ? 'Criar' : 'Salvar'}}</button>
         </div>
       </div>
     </div>

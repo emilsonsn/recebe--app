@@ -18,7 +18,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {DialogConfirmComponent} from './dialog-confirm/dialog-confirm.component';
 import {FiltersModule} from './filters/filters.module';
-import {DialogCollaboratorComponent} from './dialog-collaborator/dialog-collaborator.component';
+import {DialogUserComponent} from './dialog-user/dialog-user.component';
 import {CdkTextareaAutosize, TextFieldModule} from '@angular/cdk/text-field';
 import {MatRippleModule} from '@angular/material/core';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
@@ -33,7 +33,7 @@ import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-i
 @NgModule({
   declarations: [
     DialogConfirmComponent,
-    DialogCollaboratorComponent,
+    DialogUserComponent,
     DialogOrderComponent,
     DialogOrderImportComponent
   ],

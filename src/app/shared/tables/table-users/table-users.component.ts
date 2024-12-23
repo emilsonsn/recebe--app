@@ -4,13 +4,33 @@ import { User } from '@models/user';
 import { UserService } from '@services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-table-users',
   templateUrl: './table-users.component.html',
-  styleUrl: './table-users.component.scss'
+  styleUrl: './table-users.component.scss',
+  animations: [
+      trigger('detailExpand', [
+        state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+        state('expanded', style({ height: '*' })),
+        transition(
+          'expanded <=> collapsed',
+          animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+        ),
+      ]),
+    ],
 })
 export class TableUserComponent {
+
+  protected expanded: any;
+
   @Input()
   searchTerm?: string = '';
 
@@ -36,27 +56,27 @@ export class TableUserComponent {
       align: "start",
     },
     {
+      slug: "email",
+      order: true,
+      title: "E-mail",
+      align: "justify-content-center",
+    },
+    {
       slug: "cpf_cnpj",
       order: true,
       title: "CPF/CNPJ",
       align: "justify-content-center",
     },
     {
-      slug: "birth_date",
+      slug: "phone",
       order: true,
-      title: "Data de nascimento",
+      title: "Telefone",
       align: "justify-content-center",
     },
     {
-      slug: "cellphone",
+      slug: "status",
       order: true,
-      title: "Whatsapp",
-      align: "justify-content-center",
-    },
-    {
-      slug: "email",
-      order: true,
-      title: "E-mail",
+      title: "Status",
       align: "justify-content-center",
     },
     {
@@ -146,4 +166,14 @@ export class TableUserComponent {
     this.pageControl.take = $event.pageSize;
     this.search();
   }
+
+  // Utils
+  public toggleExpanded(element) {
+    if (this.expanded === element) {
+      this.expanded = null;
+    } else {
+      this.expanded = element;
+    }
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DialogCollaboratorComponent } from '@shared/dialogs/dialog-collaborator/dialog-collaborator.component';
+import { DialogUserComponent } from '@shared/dialogs/dialog-user/dialog-user.component';
 import { DialogConfirmComponent } from '@shared/dialogs/dialog-confirm/dialog-confirm.component';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
@@ -10,13 +10,18 @@ import { User } from '@models/user';
 import { UserService } from '@services/user.service';
 
 @Component({
-  selector: 'app-collaborator',
-  templateUrl: './collaborator.component.html',
-  styleUrl: './collaborator.component.scss',
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrl: './user.component.scss',
 })
-export class CollaboratorComponent {
+export class UserComponent {
+  // Utils
   public loading: boolean = false;
 
+  // Filters
+  protected searchTerm: string = '';
+
+  // Cards
   protected itemsRequests: ISmallInformationCard[] = [
     {
       icon: 'fa-solid fa-circle-check',
@@ -46,15 +51,15 @@ export class CollaboratorComponent {
     private readonly _toastr: ToastrService,
     private readonly _router: Router,
     private readonly _userService: UserService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     // this._getCards();
   }
 
-  openDialogUser(user?: User) {
+  ngOnInit(): void { }
+
+  protected openDialogUser(user?: User) {
     this._dialog
-      .open(DialogCollaboratorComponent, {
+      .open(DialogUserComponent, {
         data: { user },
         width: '80%',
         maxWidth: '850px',
@@ -63,7 +68,9 @@ export class CollaboratorComponent {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
+
           const id = +res.get('id');
+
           if (id) {
             this.patchUser(res);
             return;
@@ -76,7 +83,9 @@ export class CollaboratorComponent {
 
   public patchUser(user: FormData) {
     this._initOrStopLoading();
+
     const id = +user.get('id');
+
     this._userService
       .patchUser(id, user)
       .pipe(finalize(() => this._initOrStopLoading()))
@@ -180,4 +189,10 @@ export class CollaboratorComponent {
   private _initOrStopLoading(): void {
     this.loading = !this.loading;
   }
+
+  // Filters
+  protected handleSearchTerm(res) {
+    this.searchTerm = res;
+  }
+
 }

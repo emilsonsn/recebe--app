@@ -23,7 +23,7 @@ export const permissionGuard: CanActivateFn = (route: ActivatedRouteSnapshot, st
 
       //   const notAllowedPermissionToRequester = [
       //     'home',
-      //     'collaborator',
+      //     'user',
       //     'construction',
       //     'provider',
       //     'services',
