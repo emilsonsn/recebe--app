@@ -48,7 +48,7 @@
       <div class=" col-md-6 col-12 mb-3">
         <mat-form-field appearance="outline">
           <mat-label>Data de nascimento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="DD/MM/YYYY">
+          <input matInput [matDatepicker]="picker" formControlName="birth_date" placeholder="DD/MM/YYYY" readonly>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>

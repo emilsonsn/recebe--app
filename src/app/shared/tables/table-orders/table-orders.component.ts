@@ -57,39 +57,15 @@ export class TableOrdersComponent {
 
   public columns = [
     {
-      slug: 'type',
-      order: false,
-      title: 'Tipo',
-      classes: '',
-    },
-    {
       slug: 'order_id',
       order: false,
       title: 'ID Pedido',
       classes: '',
     },
     {
-      slug: 'marketplace',
+      slug: 'type',
       order: false,
-      title: 'Marketplace',
-      classes: '',
-    },
-    {
-      slug: 'account',
-      order: false,
-      title: 'Conta',
-      classes: '',
-    },
-    {
-      slug: 'order_date',
-      order: false,
-      title: 'Data Pedido',
-      classes: '',
-    },
-    {
-      slug: 'release_date',
-      order: false,
-      title: 'Data Repasse',
+      title: 'Tipo',
       classes: '',
     },
     {
@@ -111,77 +87,38 @@ export class TableOrdersComponent {
       classes: '',
     },
     {
-      slug: 'no-idea',
+      slug: 'order_date',
       order: false,
-      title: 'Correção Manual',
+      title: 'Data Pedido',
       classes: '',
     },
     {
-      slug: 'status',
+      slug: 'release_date',
       order: false,
-      title: 'Status',
+      title: 'Data Repasse',
       classes: '',
     },
+    // {
+    //   slug: 'no-idea',
+    //   order: false,
+    //   title: 'Correção Manual',
+    //   classes: '',
+    // },
+    // {
+    //   slug: 'status',
+    //   order: false,
+    //   title: 'Status',
+    //   classes: '',
+    // },
     {
       slug: 'actions',
       order: false,
       title: 'Ações',
-      classes: 'justify-content-end me-5',
+      classes: 'justify-content-end me-4 pe-2',
     },
   ];
 
-  public orders: OrderResponse[] = [
-    {
-      type: 'TESTE',
-      order_id: '333',
-      reference_id: '333',
-      order_date: new Date(),
-      sale_value: 10,
-      refund_sale: 20,
-      commission: 30,
-      refund_commission: 40,
-      shipping_fee: 50,
-      refund_shipping_fee: 60,
-      campaigns: 70,
-      refund_campaigns: 80,
-      taxes: 90,
-      refund_taxes: 120,
-      other_credits: 130,
-      other_debits: 140,
-      net_result: 150,
-    },
-    {
-      id: 1, // Exemplo de valor numérico
-      type: 'pedido', // Exemplo de tipo
-      order_id: '12345',
-      reference_id: 'ref12345',
-      order_date: new Date(), // Pode ser um Date ou uma string
-      sale_value: 500.0,
-      refund_sale: 50.0,
-      commission: 20.0,
-      refund_commission: 5.0,
-      shipping_fee: 10.0,
-      refund_shipping_fee: 2.0,
-      campaigns: 1,
-      refund_campaigns: 0.5,
-      taxes: 25.0,
-      refund_taxes: 5.0,
-      other_credits: 10.0,
-      other_debits: 3.0,
-      net_result: 450.0,
-      sequence_id: 'seq123', // Opcional
-      integrator_id: 'integrator123', // Opcional
-      shipping_id: 'shipping123', // Opcional
-      marketplace: 'marketplaceXYZ', // Opcional
-      account: 'contaABC', // Opcional
-      invoice_number: 'inv123456', // Opcional
-      invoice_series: 'serie123', // Opcional
-      release_date: new Date(), // Opcional
-      sync_date: new Date(), // Opcional
-      user_id: 5, // Opcional
-      status: 'Pendente', // Opcional
-    },
-  ];
+  public orders: OrderResponse[] = [];
 
   public pageControl: PageControl = {
     take: 10,

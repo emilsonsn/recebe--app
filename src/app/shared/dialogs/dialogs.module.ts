@@ -24,7 +24,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {TablesModule} from '@shared/tables/tables.module';
-import {MatIcon} from "@angular/material/icon";
+import {MatIconModule} from "@angular/material/icon";
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { DialogOrderComponent } from './dialog-order/dialog-order.component';
 import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-import.component';
@@ -57,6 +57,7 @@ import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-i
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatIconModule,
     MatDividerModule,
     MatRippleModule,
     TextFieldModule,
@@ -65,7 +66,6 @@ import { DialogOrderImportComponent } from './dialog-order-import/dialog-order-i
     NgxMaskDirective,
     NgxMaskPipe,
     NgxMatSelectSearchModule,
-    MatIcon
   ]
 })
 export class DialogsModule {

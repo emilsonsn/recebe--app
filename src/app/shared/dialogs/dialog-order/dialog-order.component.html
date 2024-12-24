@@ -17,77 +17,77 @@
 
   <form [formGroup]="form" class="row">
 
-    <div class="col-md-6 mb-3">
-      <span class="fw-bolder">Tipo *</span>
-      <mat-form-field appearance="outline">
-        <input type="text" formControlName="type" matInput placeholder="Insira o Tipo" />
-      </mat-form-field>
-    </div>
-
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID do Pedido *</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="order_id" matInput placeholder="Insira o ID do Pedido" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
+      <span class="fw-bolder">Tipo *</span>
+      <mat-form-field appearance="outline">
+        <input type="text" formControlName="type" matInput placeholder="Insira o Tipo" />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID de Referência *</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="reference_id" matInput placeholder="Insira o ID de Referência" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID de Sequência</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="sequence_id" matInput placeholder="Insira o ID de Sequência" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID do Integrador</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="integrator_id" matInput placeholder="Insira o ID do Integrador" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID do Frete</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="shipping_id" matInput placeholder="Insira o ID do Frete" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Marketplace</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="marketplace" matInput placeholder="Insira o Marketplace" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Conta</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="account" matInput placeholder="Insira a Conta" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Número da Nota Fiscal</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="invoice_number" matInput placeholder="Insira o Número da Nota Fiscal" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Série da Nota Fiscal</span>
       <mat-form-field appearance="outline">
         <input type="text" formControlName="invoice_series" matInput placeholder="Insira a Série da Nota Fiscal" />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Data do Pedido *</span>
       <mat-form-field appearance="outline">
         <input matInput [matDatepicker]="orderDatePicker" formControlName="order_date" placeholder="DD/MM/YYYY" readonly>
@@ -96,7 +96,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Data de Liberação</span>
       <mat-form-field appearance="outline">
         <input matInput [matDatepicker]="releaseDatePicker" formControlName="release_date" placeholder="DD/MM/YYYY" readonly>
@@ -105,101 +105,99 @@
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Valor da Venda *</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="sale_value" matInput placeholder="Insira o Valor da Venda" />
+        <input type="text" formControlName="sale_value" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Reembolso da Venda</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="refund_sale" matInput placeholder="Insira o Reembolso da Venda" />
+        <input type="text" formControlName="refund_sale" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Comissão</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="commission" matInput placeholder="Insira a Comissão" />
+        <input type="text" formControlName="commission" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Reembolso da Comissão</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="refund_commission" matInput
-          placeholder="Insira o Reembolso da Comissão" />
+        <input type="text" formControlName="refund_commission" matInput
+          placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Taxa de Envio</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="shipping_fee" matInput placeholder="Insira a Taxa de Envio" />
+        <input type="text" formControlName="shipping_fee" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Reembolso da Taxa de Envio</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="refund_shipping_fee" matInput
-          placeholder="Insira o Reembolso da Taxa de Envio" />
+        <input type="text" formControlName="refund_shipping_fee" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Campanhas</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="campaigns" matInput placeholder="Insira o Valor das Campanhas" />
+        <input type="text" formControlName="campaigns" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Reembolso de Campanhas</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="refund_campaigns" matInput
-          placeholder="Insira o Reembolso de Campanhas" />
+        <input type="text" formControlName="refund_campaigns" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Impostos</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="taxes" matInput placeholder="Insira o Valor dos Impostos" />
+        <input type="text" formControlName="taxes" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Reembolso de Impostos</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="refund_taxes" matInput placeholder="Insira o Reembolso de Impostos" />
+        <input type="text" formControlName="refund_taxes" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Outros Créditos</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="other_credits" matInput placeholder="Insira Outros Créditos" />
+        <input type="text" formControlName="other_credits" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Outros Débitos</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="other_debits" matInput placeholder="Insira Outros Débitos" />
+        <input type="text" formControlName="other_debits" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Resultado Líquido</span>
       <mat-form-field appearance="outline">
-        <input type="number" formControlName="net_result" matInput placeholder="Insira o Resultado Líquido" />
+        <input type="text" formControlName="net_result" matInput placeholder="R$ 0,00" currencyMask />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">Data de Sincronização</span>
       <mat-form-field appearance="outline">
         <input matInput [matDatepicker]="syncDatePicker" formControlName="sync_date" placeholder="DD/MM/YYYY" readonly>
@@ -208,7 +206,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <span class="fw-bolder">ID do Usuário *</span>
       <mat-form-field>
         <mat-select formControlName="user_id" placeholder="ID do Usuário">

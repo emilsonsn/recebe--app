@@ -10,7 +10,7 @@ import {provideLottieOptions} from "ngx-lottie";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DATE_PIPE_DEFAULT_OPTIONS, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideNgxMask } from 'ngx-mask';
 import { CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule } from 'ng2-currency-mask';
@@ -56,6 +56,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
       provide: LOCALE_ID,
       useValue: 'pt-BR'
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     {
       provide: DEFAULT_CURRENCY_CODE,
       useValue: 'BRL'

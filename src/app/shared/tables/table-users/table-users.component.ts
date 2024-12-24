@@ -83,7 +83,7 @@ export class TableUserComponent {
       slug: "",
       order: true,
       title: "Ações",
-      align: "justify-content-end me-4",
+      align: "justify-content-end me-4 pe-2",
     },
   ];
 

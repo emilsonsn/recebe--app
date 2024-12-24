@@ -5,7 +5,7 @@
         @for (col of columns; track col) {
         <th [class.hasorder]="col.order" [class.active-order]="pageControl.orderField === col.slug"
           (click)="onClickOrderBy(col.slug, col.order)">
-          <div class="d-flex {{col.classes}}">
+          <div class="d-flex {{col.classes}} textNoWrap" style="color: #a2a1a8">
             {{ col.title }}
             <i class="material-icons" *ngIf="pageControl.orderField === col.slug">
               {{ pageControl.order === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}
@@ -35,85 +35,60 @@
         <tr class="table-line-hover" [ngStyle]="{ 'background-color': order == expanded ? '#efefef' : 'transparent' }"
           (click)="toggleExpanded(order)">
           <td>
-            <div>
-              {{ order?.type ?? '-' }}
-            </div>
-          </td>
-          <td>
-            <div>
+            <div class="content textNoWrap">
               {{ order?.order_id ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
-              {{ order?.marketplace ?? '-' }}
+            <div class="content textNoWrap">
+              {{ order?.type ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
-              {{ order?.account ?? '-' }}
-            </div>
-          </td>
-          <td>
-            <div>
-              {{ (order?.order_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
-            </div>
-          </td>
-          <td>
-            <div>
-              {{ (order?.release_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
-            </div>
-          </td>
-          <td>
-            <div>
+            <div class="content textNoWrap">
               {{ (order?.sale_value | currency) ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
+            <div class="content textNoWrap">
               {{ (order?.refund_sale | currency) ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
+            <div class="content textNoWrap">
               {{ (order?.net_result | currency) ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
-              {{ "CORREÇÃO MANUAL" }}
+            <div class="content textNoWrap">
+              {{ (order?.order_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
             </div>
           </td>
           <td>
-            <div>
+            <div class="content textNoWrap">
+              {{ (order?.release_date | date:"dd/MM/YYYY HH:mm:ss") ?? '-' }}
+            </div>
+          </td>
+          <!-- <td>
+            <div class="status">
               {{ order?.status ?? '-'}}
             </div>
-          </td>
+          </td> -->
           @if (!home) {
           <td>
-            <div id="buttons" class="d-flex justify-content-end">
-              <!-- <div matRipple class="buttonTemplate" (click)="$event.stopPropagation(); onViewOrder.emit(
-                      {
-                        edit: false,
-                        order : order
-                      }
-                    )">
-                <i class="fa-solid fa-eye"></i>
-              </div> -->
-
-              <div matRipple class="buttonTemplate" (click)="$event.stopPropagation(); onEditOrder.emit(
-                      {
-                        edit: true,
-                        order : order
-                      }
-                    )">
+            <div class="d-flex justify-content-end">
+              <div matRipple class="buttonTemplate" (click)="onEditOrder.emit(
+                  {
+                    edit: true,
+                    order : order
+                  }
+                ); $event.stopPropagation()">
                 <i class="fa-solid fa-pen-to-square"></i>
               </div>
 
-              <div matRipple class="buttonTemplate" (click)="onDeleteOrder.emit(order)">
+              <div matRipple class="buttonTemplate bgRed" (click)="onDeleteOrder.emit(order); $event.stopPropagation()">
                 <i class="fa-solid fa-trash"></i>
               </div>
-
             </div>
           </td>
           }
@@ -122,7 +97,7 @@
           <td colspan="14" class="p-0">
             <div [@detailExpand]="order == expanded ? 'expanded' : 'collapsed'" style="overflow: hidden;">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">ID Referência</span>
                     <div>
@@ -130,111 +105,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Comissão</span>
-                    <div>
-                      {{ (order?.commission | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Devolução Comissão</span>
-                    <div>
-                      {{ (order?.refund_commission | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Taxa de Envio</span>
-                    <div>
-                      {{ (order?.shipping_fee | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Devolução Taxa de Envio</span>
-                    <div>
-                      {{ (order?.refund_shipping_fee | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Campanhas</span>
-                    <div>
-                      {{ (order?.campaigns | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Devolução Campanhas</span>
-                    <div>
-                      {{ (order?.refund_campaigns | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Taxas</span>
-                    <div>
-                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Devolução Taxas</span>
-                    <div>
-                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Outros Créditos</span>
-                    <div>
-                      {{ (order?.other_credits | currency) ?? 'R$ 0,00'}}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">Outros Débitos</span>
-                    <div>
-                      {{ (order?.other_debits | currency) ?? 'R$ 0,00' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">ID Sequência</span>
-                    <div>
-                      {{ order?.sequence_id ?? '-' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">ID Integrador</span>
-                    <div>
-                      {{ order?.integrator_id ?? '-' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="p-md-3 p-2">
-                    <span class="expandedCaption mb-2">ID Envio</span>
-                    <div>
-                      {{ order?.shipping_id ?? '-' }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">Conta</span>
                     <div>
@@ -242,7 +113,127 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Mercado</span>
+                    <div>
+                      {{ order?.marketplace ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Comissão</span>
+                    <div>
+                      {{ (order?.commission | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Comissão</span>
+                    <div>
+                      {{ (order?.refund_commission | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Taxa de Envio</span>
+                    <div>
+                      {{ (order?.shipping_fee | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Taxa de Envio</span>
+                    <div>
+                      {{ (order?.refund_shipping_fee | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Campanhas</span>
+                    <div>
+                      {{ (order?.campaigns | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Campanhas</span>
+                    <div>
+                      {{ (order?.refund_campaigns | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Taxas</span>
+                    <div>
+                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Devolução Taxas</span>
+                    <div>
+                      {{ (order?.taxes | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Outros Créditos</span>
+                    <div>
+                      {{ (order?.other_credits | currency) ?? 'R$ 0,00'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Outros Débitos</span>
+                    <div>
+                      {{ (order?.other_debits | currency) ?? 'R$ 0,00' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Sequência</span>
+                    <div>
+                      {{ order?.sequence_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Integrador</span>
+                    <div>
+                      {{ order?.integrator_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">ID Envio</span>
+                    <div>
+                      {{ order?.shipping_id ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <div class="p-md-3 p-2">
+                    <span class="expandedCaption mb-2">Conta</span>
+                    <div>
+                      {{ order?.account ?? '-' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">Número Nota Fiscal</span>
                     <div>
@@ -250,7 +241,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">Série Nota Fiscal</span>
                     <div>
@@ -258,7 +249,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">Data Sincronização</span>
                     <div>
@@ -266,7 +257,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-3">
                   <div class="p-md-3 p-2">
                     <span class="expandedCaption mb-2">ID Usuário</span>
                     <div>

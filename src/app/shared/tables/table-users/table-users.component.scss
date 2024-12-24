@@ -26,22 +26,6 @@ mat-spinner {
   height: 4.5rem !important;
 }
 
-.status {
-  font-weight: 600!important;
-
-  &.pending {
-    color: $yellow;
-  }
-
-  &.resolved {
-    color: $green;
-  }
-
-  &.requestfinance {
-    color: $teal;
-  }
-}
-
 .expandedCaption {
   font-weight: 500;
   font-size: 1rem;
@@ -61,5 +45,6 @@ mat-spinner {
 
 td {
   background-color: transparent;
+  height: 0px;
 }
 

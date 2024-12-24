@@ -11,18 +11,18 @@ mat-spinner {
 }
 
 .status {
+  text-align: center;
   font-weight: 600!important;
+  border-radius: 5px;
+  color: $white-300;
+  padding: 0.2rem 0.5rem;
 
-  &.pending {
-    color: $yellow;
+  &.active {
+    background-color: $green;
   }
 
-  &.resolved {
-    color: $green;
-  }
-
-  &.requestfinance {
-    color: $teal;
+  &.inactive {
+    background-color: $red;
   }
 }
 
@@ -45,4 +45,11 @@ mat-spinner {
 
 td {
   background-color: transparent;
+  height: 0px;
+
+  .content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 }
