@@ -85,7 +85,7 @@ export class DialogOrderImportComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
 
     if (file) {
-      const validExtensions = ['xlsx', 'ods', 'xls'];
+      const validExtensions = ['xlsx', 'ods', 'csv', 'xls'];
 
       const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
